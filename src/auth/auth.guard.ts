@@ -21,11 +21,9 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const sessionInfo = this.jwtService.verifyAsync(token, {
+      req['session'] = this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
-
-      req['session'] = sessionInfo;
     } catch {
       throw new UnauthorizedException();
     }
